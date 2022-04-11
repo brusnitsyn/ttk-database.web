@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('cost', 13);
             $table->decimal('weight', 8);
             $table->string('image', 320);
+            $table->foreignId('equipment_manufacturers_id')->on('equipment_manufacturers')->onDelete('cascade');
 
             //$table->foreignId('');
             $table->timestamps();

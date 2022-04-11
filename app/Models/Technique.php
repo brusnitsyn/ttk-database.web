@@ -13,4 +13,9 @@ class Technique extends Model
         'name',
         'equipment_manufacturer_id'
     ];
+
+    public function manufacturer()
+    {
+        $this->hasOne(EquipmentManufacturer::class);
+    }
 }

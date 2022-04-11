@@ -16,4 +16,9 @@ class Product extends Model
         'weight',
         'image',
     ];
+
+    public function techniques()
+    {
+        $this->belongsToMany(Technique::class);
+    }
 }

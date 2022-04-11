@@ -10,7 +10,7 @@ class SuitableForTechnique extends Model
     use HasFactory;
 
     protected $fillable = [
+        'product_id',
         'technique_id',
-        'product_id'
     ];
 }
