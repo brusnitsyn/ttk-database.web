@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TechniqueResource;
-use App\Models\Technique;
+use App\Models\MachineType;
 use Illuminate\Http\Request;
 
-class TechniqueController extends Controller
+class MachineTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,17 @@ class TechniqueController extends Controller
      */
     public function index()
     {
-        return TechniqueResource::collection(Technique::all());
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -33,10 +42,21 @@ class TechniqueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\MachineType  $machineType
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(MachineType $machineType)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\MachineType  $machineType
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(MachineType $machineType)
     {
         //
     }
@@ -45,10 +65,10 @@ class TechniqueController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\MachineType  $machineType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, MachineType $machineType)
     {
         //
     }
@@ -56,10 +76,10 @@ class TechniqueController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\MachineType  $machineType
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(MachineType $machineType)
     {
         //
     }

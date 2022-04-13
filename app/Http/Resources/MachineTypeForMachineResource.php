@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TechniqueResource extends JsonResource
+class MachineTypeForMachineResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +15,8 @@ class TechniqueResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'brand' => EquipmentManufacturerResource::make($this->manufacturer),
-            'kind' => MachineTypeResource::make($this->kind)
+            'machine' => TechniqueResource::make($this->machine),
+            'machine_type' => MachineTypeResource::make($this->machineType),
         ];
     }
 }

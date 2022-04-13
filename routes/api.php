@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\v1\CategoriesController;
 use App\Http\Controllers\Api\v1\EquipmentManufacturerController;
+use App\Http\Controllers\Api\v1\MachineTypeForMachineController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\TechniqueController;
 use Illuminate\Http\Request;
