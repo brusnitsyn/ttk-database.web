@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('machine_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 255);
-            $table->foreignId('brand_id')->references('id')->on('equipment_manufacturers')->onDelete('cascade');
+            $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->timestamps();
         });
     }

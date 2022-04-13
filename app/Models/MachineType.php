@@ -16,6 +16,6 @@ class MachineType extends Model
 
     public function brand()
     {
-        return $this->hasOne(EquipmentManufacturer::class, 'id');
+        return $this->hasOne(Brand::class);
     }
 }

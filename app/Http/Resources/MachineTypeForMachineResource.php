@@ -15,7 +15,8 @@ class MachineTypeForMachineResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'machine' => TechniqueResource::make($this->machine),
+            'id' => $this->id,
+            'machine' => MachineResource::make($this->machine),
             'machine_type' => MachineTypeResource::make($this->machineType),
         ];
     }

@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Technique extends Model
+class Machine extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'equipment_manufacturer_id'
+        'brand_id'
     ];
 
-    public function manufacturer()
+    public function brand()
     {
-        return $this->hasOne(EquipmentManufacturer::class, 'id');
+        return $this->belongsTo(Brand::class);
     }
 
     public function kind()
     {
-        return $this->hasOne(MachineTypeForMachine::class, 'machine_type_id');
+        return $this->hasOneThrough(MachineType::class, MachineTypeForMachine::class, 'machine_type_id', 'id', 'id', 'id');
     }
 }

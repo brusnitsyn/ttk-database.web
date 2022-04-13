@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Machine;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\EquipmentManufacturerResource;
-use App\Models\EquipmentManufacturer;
+use App\Http\Resources\MachineResource;
 use Illuminate\Http\Request;
 
-class EquipmentManufacturerController extends Controller
+class MachineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,17 @@ class EquipmentManufacturerController extends Controller
      */
     public function index()
     {
-        return EquipmentManufacturerResource::collection(EquipmentManufacturer::all());
+        return MachineResource::collection(Machine::all());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -33,10 +43,21 @@ class EquipmentManufacturerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Machine  $machine
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Machine $machine)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Machine  $machine
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Machine $machine)
     {
         //
     }
@@ -45,10 +66,10 @@ class EquipmentManufacturerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Machine  $machine
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Machine $machine)
     {
         //
     }
@@ -56,10 +77,10 @@ class EquipmentManufacturerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Machine  $machine
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Machine $machine)
     {
         //
     }

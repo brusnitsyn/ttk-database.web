@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('techniques', function (Blueprint $table) {
+        Schema::create('machine_for_products', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->foreignId('brand_id')->references('id')->on('equipment_manufacturers')->onDelete('cascade');;
+            $table->foreignId('machine_id')->references('id')->on('machines')->onDelete('cascade');
+            $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('techniques');
+        Schema::dropIfExists('machine_for_products');
     }
 };

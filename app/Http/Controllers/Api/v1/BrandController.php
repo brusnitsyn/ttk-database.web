@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Brand;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BrandResource;
 use Illuminate\Http\Request;
 
-class SuitableForTechniqueController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +15,16 @@ class SuitableForTechniqueController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    {
+        return BrandResource::collection(Brand::all());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
         //
     }
@@ -31,10 +43,21 @@ class SuitableForTechniqueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Brand $brand)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Brand  $brand
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Brand $brand)
     {
         //
     }
@@ -43,10 +66,10 @@ class SuitableForTechniqueController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
         //
     }
@@ -54,10 +77,10 @@ class SuitableForTechniqueController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
         //
     }

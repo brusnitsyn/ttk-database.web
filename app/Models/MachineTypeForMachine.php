@@ -16,11 +16,11 @@ class MachineTypeForMachine extends Model
 
     public function machine()
     {
-        return $this->hasOne(Technique::class, 'id');
+        return $this->belongsTo(Machine::class);
     }
 
     public function machineType()
     {
-        return $this->hasOne(MachineTypeForMachine::class, 'id');
+        return $this->belongsTo(MachineType::class);
     }
 }

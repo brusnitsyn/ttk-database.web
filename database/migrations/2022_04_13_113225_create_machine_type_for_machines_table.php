@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('machine_type_for_machines', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('machine_id')->references('id')->on('techniques')->onDelete('cascade');
+            $table->foreignId('machine_id')->references('id')->on('machines')->onDelete('cascade');
             $table->foreignId('machine_type_id')->references('id')->on('machine_types')->onDelete('cascade');
             $table->timestamps();
         });
