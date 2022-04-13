@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('techniques', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->foreignId('equipment_manufacturer_id')->on('equipment_manufacturers')->onDelete('cascade');
+            $table->foreignId('brand_id')->references('id')->on('equipment_manufacturers')->onDelete('cascade');;
             $table->timestamps();
         });
     }
