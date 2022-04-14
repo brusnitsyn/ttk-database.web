@@ -15,10 +15,11 @@ class Product extends Model
         'cost',
         'weight',
         'image',
+        'brand_id'
     ];
 
-    public function techniques()
+    public function brand()
     {
-        $this->belongsToMany(Technique::class);
+        return $this->belongsTo(Brand::class);
     }
 }

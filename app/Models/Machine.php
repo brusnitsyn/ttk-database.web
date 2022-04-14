@@ -11,7 +11,8 @@ class Machine extends Model
 
     protected $fillable = [
         'name',
-        'brand_id'
+        'brand_id',
+        'machine_type_id'
     ];
 
     public function brand()
@@ -21,6 +22,6 @@ class Machine extends Model
 
     public function kind()
     {
-        return $this->hasOneThrough(MachineType::class, MachineTypeForMachine::class, 'machine_type_id', 'id', 'id', 'id');
+        return $this->belongsTo(MachineType::class);
     }
 }

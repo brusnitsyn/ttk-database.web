@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreignId('machine_type_id')->references('id')->on('machine_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class MachineResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'brand' => BrandResource::make($this->brand),
-            'kind' => MachineTypeResource::make($this->kind)
+            'kind' => $this->kind
         ];
     }
 }
