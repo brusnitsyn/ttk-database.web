@@ -20,7 +20,7 @@ class Machine extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function kind()
+    public function machineType()
     {
         return $this->belongsTo(MachineType::class);
     }

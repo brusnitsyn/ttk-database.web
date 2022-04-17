@@ -18,11 +18,14 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'article' => $this->article,
-            'cost' => $this->cost,
+            'actualPrice' => $this->actual_price,
+            'discountPrice' => $this->discount_price,
             'weight' => $this->weight,
             'image' => $this->image,
 
             'brand' => BrandResource::make($this->brand),
+            'machineType' => MachineTypeResource::make($this->machineType),
+            'machine' => MachineResource::make($this->machine),
         ];
     }
 }

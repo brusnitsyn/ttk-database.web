@@ -17,10 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('article', 255);
-            $table->decimal('cost', 13);
+            $table->decimal('actual_price', 13);
+            $table->decimal('discount_price', 13)->nullable();
             $table->decimal('weight', 8);
             $table->string('image', 320);
+
             $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreignId('machine_type_id')->references('id')->on('machine_types')->onDelete('cascade');
+            $table->foreignId('machine_id')->references('id')->on('machines')->onDelete('cascade');
 
             //$table->foreignId('');
             $table->timestamps();
