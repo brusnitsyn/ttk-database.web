@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MachineTypeResource;
 use App\Models\MachineType;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class MachineTypeController extends Controller
      */
     public function index()
     {
-        //
+        return MachineTypeResource::collection(MachineType::all());
     }
 
     /**

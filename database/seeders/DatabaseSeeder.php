@@ -72,8 +72,6 @@ class DatabaseSeeder extends Seeder
             'actual_price' => 4300,
             'weight' => 3.20,
             'image' => "/img/product-test-img.png",
-            'brand_id' => 2,
-            'machine_type_id' => 6,
             'machine_id' => 3,
         ]);
         DB::table('products')->insert([
@@ -82,8 +80,6 @@ class DatabaseSeeder extends Seeder
             'actual_price' => 2300,
             'weight' => 5.20,
             'image' => "/img/product-test-img.png",
-            'brand_id' => 1,
-            'machine_type_id' => 3,
             'machine_id' => 1,
         ]);
     }

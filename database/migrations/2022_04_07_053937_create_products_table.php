@@ -22,8 +22,6 @@ return new class extends Migration
             $table->decimal('weight', 8);
             $table->string('image', 320);
 
-            $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
-            $table->foreignId('machine_type_id')->references('id')->on('machine_types')->onDelete('cascade');
             $table->foreignId('machine_id')->references('id')->on('machines')->onDelete('cascade');
 
             //$table->foreignId('');

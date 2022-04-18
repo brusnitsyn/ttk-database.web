@@ -16,20 +16,8 @@ class Product extends Model
         'discount_price',
         'weight',
         'image',
-        'brand_id',
-        'machine_type_id',
         'machine_id',
     ];
-
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
-
-    public function machineType()
-    {
-        return $this->belongsTo(MachineType::class);
-    }
 
     public function machine()
     {
