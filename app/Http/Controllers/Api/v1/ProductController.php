@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MachineResource;
 use App\Http\Resources\ProductResource;
+use App\Models\MachineType;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return ProductResource::collection(Product::all());
+        $products = Product::all()->machines;
+        dd($products);
+        $machines = array();
+        foreach ($products as $product) {
+            foreach ($product->machines as $machine) {
+                $machineModel = MachineType::findOrFail($machine->machine_id);
+                array_push($machines, $machineModel);
+            }
+        }
+        $products->machines = $machines;
+        return ProductResource::collection($products);
     }
 
     /**

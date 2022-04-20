@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'weight' => $this->weight,
             'image' => $this->image,
 
-            'machine' => MachineResource::make($this->machine),
+            'machines' => MachineResource::collection($this->machines),
         ];
     }
 }

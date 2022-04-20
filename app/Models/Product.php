@@ -16,11 +16,10 @@ class Product extends Model
         'discount_price',
         'weight',
         'image',
-        'machine_id',
     ];
 
-    public function machine()
+    public function machines()
     {
-        return $this->belongsTo(Machine::class);
+        return $this->hasMany(MachineForProduct::class);
     }
 }
