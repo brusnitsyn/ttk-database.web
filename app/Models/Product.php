@@ -18,8 +18,13 @@ class Product extends Model
         'image',
     ];
 
+    /**
+     * The machines that belong to the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function machines()
     {
-        return $this->hasMany(MachineForProduct::class);
+        return $this->belongsToMany(Machine::class, 'machine_for_products', 'product_id', 'machine_id');
     }
 }

@@ -18,16 +18,16 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all()->machines;
-        dd($products);
-        $machines = array();
-        foreach ($products as $product) {
-            foreach ($product->machines as $machine) {
-                $machineModel = MachineType::findOrFail($machine->machine_id);
-                array_push($machines, $machineModel);
-            }
-        }
-        $products->machines = $machines;
+        $products = Product::all();
+        // dd($products);
+        // $machines = array();
+        // foreach ($products as $product) {
+        //     foreach ($product->machines as $machine) {
+        //         $machineModel = MachineType::findOrFail($machine->machine_id);
+        //         array_push($machines, $machineModel);
+        //     }
+        // }
+        // $products->machines = $machines;
         return ProductResource::collection($products);
     }
 
