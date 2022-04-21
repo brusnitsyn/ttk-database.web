@@ -11,14 +11,14 @@ class Machine extends Model
 
     protected $fillable = [
         'name',
-        'brand_id',
+        // 'brand_id',
         'machine_type_id'
     ];
 
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
+    // public function brand()
+    // {
+    //     return $this->belongsTo(Brand::class);
+    // }
 
     public function machineType()
     {

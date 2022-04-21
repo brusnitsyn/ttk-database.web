@@ -20,10 +20,12 @@ return new class extends Migration
             $table->decimal('actual_price', 13);
             $table->decimal('discount_price', 13)->nullable();
             $table->decimal('weight', 8);
-            $table->decimal('width', 8);
-            $table->decimal('length', 8);
+            $table->decimal('width', 8)->nullable();
+            $table->decimal('height', 8)->nullable();
+            $table->decimal('length', 8)->nullable();
             $table->string('hole', 320)->nullable();
             $table->string('image', 320);
+            $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
 
             //$table->foreignId('');
             $table->timestamps();

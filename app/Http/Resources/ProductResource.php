@@ -21,8 +21,13 @@ class ProductResource extends JsonResource
             'actualPrice' => $this->actual_price,
             'discountPrice' => $this->discount_price,
             'weight' => $this->weight,
+            'width' => $this->width,
+            'height' => $this->height,
+            'length' => $this->length,
+            'hole' => $this->hole,
             'image' => $this->image,
 
+            'brand' => $this->brand->name,
             'machines' => MachineResource::collection($this->machines),
         ];
     }

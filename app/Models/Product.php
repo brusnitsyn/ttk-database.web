@@ -15,8 +15,23 @@ class Product extends Model
         'actual_price',
         'discount_price',
         'weight',
+        'width',
+        'height',
+        'length',
+        'hole',
         'image',
+        'brand_id',
     ];
+
+    /**
+     * Get the brand that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 
     /**
      * The machines that belong to the Product
