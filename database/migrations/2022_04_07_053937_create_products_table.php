@@ -24,7 +24,7 @@ return new class extends Migration
             $table->decimal('height', 8)->nullable();
             $table->decimal('length', 8)->nullable();
             $table->string('hole', 320)->nullable();
-            $table->string('image', 320);
+            $table->string('preview_image_id', 320);
             $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
 
             //$table->foreignId('');
