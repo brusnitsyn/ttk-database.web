@@ -19,15 +19,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        // dd($products);
-        // $machines = array();
-        // foreach ($products as $product) {
-        //     foreach ($product->machines as $machine) {
-        //         $machineModel = MachineType::findOrFail($machine->machine_id);
-        //         array_push($machines, $machineModel);
-        //     }
-        // }
-        // $products->machines = $machines;
         return ProductResource::collection($products);
     }
 
@@ -39,7 +30,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'article' => ['required', 'string', 'max:255'],
+            'actual_price' => ['required', 'numeric', 'between:0,99999999999.99'],
+            'discount_price' => ['numeric', 'between:0,99999999999.99'],
+            'weight' => ['required', 'numeric', 'between:0,999999.99'],
+            'width' => ['numeric', 'between:0,999999.99'],
+            'height' => ['numeric', 'between:0,999999.99'],
+            'length' => ['numeric', 'between:0,999999.99'],
+            'hole' => ['string', 'max:320'],
+        ]);
     }
 
     /**
