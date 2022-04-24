@@ -33,14 +33,35 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'article' => ['required', 'string', 'max:255'],
-            'actual_price' => ['required', 'numeric', 'between:0,99999999999.99'],
-            'discount_price' => ['numeric', 'between:0,99999999999.99'],
+            'actualPrice' => ['required', 'numeric', 'between:0,99999999999.99'],
+            'discountPrice' => ['numeric', 'between:0,99999999999.99'],
             'weight' => ['required', 'numeric', 'between:0,999999.99'],
             'width' => ['numeric', 'between:0,999999.99'],
             'height' => ['numeric', 'between:0,999999.99'],
             'length' => ['numeric', 'between:0,999999.99'],
             'hole' => ['string', 'max:320'],
+            'previewImage' => ['file'],
         ]);
+
+        $product = new Product();
+
+        if ($request->hasFile('previewImage')) {
+            $filename = now() . $request->previewImage->extension();
+            $path = $request->previewImage->storeAs('products/preview', $filename, 's3');
+        }
+
+        $product->name = $request->name;
+        $product->article = $request->article;
+        $product->actualPrice = $request->actualPrice;
+        $product->discountPrice = $request->discountPrice;
+        $product->weight = $request->weight;
+        $product->width = $request->width;
+        $product->height = $request->height;
+        $product->length = $request->length;
+        $product->hole = $request->hole;
+        $product->previewImage = $path;
+
+        $product->save();
     }
 
     /**

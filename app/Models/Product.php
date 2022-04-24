@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Product extends BaseModel
 {
     use HasFactory;
 
@@ -41,5 +40,10 @@ class Product extends Model
     public function machines()
     {
         return $this->belongsToMany(Machine::class, 'machine_for_products', 'product_id', 'machine_id');
+    }
+
+    public function carouselImages()
+    {
+        return $this->morphMany(UploadImage::class, 'imageable');
     }
 }
