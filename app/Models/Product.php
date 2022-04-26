@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Eloquent\Uploadable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends BaseModel
 {
-    use HasFactory;
+    use HasFactory, Uploadable;
 
     protected $fillable = [
         'name',
@@ -18,7 +19,7 @@ class Product extends BaseModel
         'height',
         'length',
         'hole',
-        'image',
+        'preview_image',
         'brand_id',
     ];
 

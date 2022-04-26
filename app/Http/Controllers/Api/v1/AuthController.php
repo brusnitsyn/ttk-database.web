@@ -49,7 +49,7 @@ class AuthController extends Controller
             ], 201);
         } else {
             throw ValidationException::withMessages([
-                'email' => 'Неверный электронный адрес.'
+                'email' => 'Неверный пароль.'
             ]);
         }
     }

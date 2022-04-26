@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MachineResource;
 use App\Http\Resources\ProductResource;
+use App\Models\MachineForProduct;
 use App\Models\MachineType;
 use App\Models\Product;
+use App\Models\UploadImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -34,20 +37,22 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'article' => ['required', 'string', 'max:255'],
             'actualPrice' => ['required', 'numeric', 'between:0,99999999999.99'],
-            'discountPrice' => ['numeric', 'between:0,99999999999.99'],
+            'discountPrice' => ['nullable', 'numeric', 'between:0,99999999999.99'],
             'weight' => ['required', 'numeric', 'between:0,999999.99'],
-            'width' => ['numeric', 'between:0,999999.99'],
-            'height' => ['numeric', 'between:0,999999.99'],
-            'length' => ['numeric', 'between:0,999999.99'],
-            'hole' => ['string', 'max:320'],
-            'previewImage' => ['file'],
+            'width' => ['numeric', 'between:0,999999.99', 'nullable'],
+            'height' => ['numeric', 'between:0,999999.99', 'nullable'],
+            'length' => ['numeric', 'between:0,999999.99', 'nullable'],
+            'hole' => ['string', 'max:320', 'nullable'],
+            'brandId' => ['numeric'],
+            'machines' => ['required'],
+            'previewImage' => ['image'],
+            'carouselImages' => ['required']
         ]);
 
-        $product = new Product();
+        $product = new Product;
 
         if ($request->hasFile('previewImage')) {
-            $filename = now() . $request->previewImage->extension();
-            $path = $request->previewImage->storeAs('products/preview', $filename, 's3');
+            $path = $product->upload($request->previewImage, 'public', 'products/preview');
         }
 
         $product->name = $request->name;
@@ -60,8 +65,35 @@ class ProductController extends Controller
         $product->length = $request->length;
         $product->hole = $request->hole;
         $product->previewImage = $path;
+        $product->brandId = $request->brandId;
 
         $product->save();
+
+        if ($request->hasFile('carouselImages')) {
+            foreach ($request->file('carouselImages[]') as $image) {
+                $imageName = now() . '.' . $image->extension();
+
+                $uploadImage = new UploadImage;
+                $uploadImage->name = $imageName;
+                $uploadImage->url = $uploadImage->upload($image, 'public', 'products/carousel');
+
+                $product->carouselImages()->associate($uploadImage)->save();
+            }
+        } else {
+            return 'err';
+        }
+
+        $machines = json_decode($request->machines);
+        if ($machines) {
+            foreach ($machines as $machine) {
+                $machineForProduct = new MachineForProduct();
+                $machineForProduct->productId = $product->id;
+                $machineForProduct->machineId = $machine->id;
+                $machineForProduct->save();
+            }
+        }
+
+        return ProductResource::make($product);
     }
 
     /**
