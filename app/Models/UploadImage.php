@@ -13,8 +13,6 @@ class UploadImage extends Model
     protected $fillable = [
         'name',
         'url',
-        'imageable_id',
-        'imageable_type'
     ];
 
     public function imageable()

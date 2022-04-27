@@ -46,7 +46,8 @@ class ProductController extends Controller
             'brandId' => ['numeric'],
             'machines' => ['required'],
             'previewImage' => ['image'],
-            'carouselImages' => ['required']
+            'carouselImages' => ['required'],
+            'carouselImages.*' => ['required']
         ]);
 
         $product = new Product;
@@ -69,18 +70,17 @@ class ProductController extends Controller
 
         $product->save();
 
-        if ($request->hasFile('carouselImages')) {
-            foreach ($request->file('carouselImages[]') as $image) {
-                $imageName = now() . '.' . $image->extension();
+        $carouselImages = $request->carouselImages;
+        if (count($carouselImages) > 0) {
+            foreach ($carouselImages as $image) {
+                $imageName = uniqid() . '_' . str_replace(' ', '_', $image->getClientOriginalName());
 
-                $uploadImage = new UploadImage;
+                $uploadImage = new UploadImage();
                 $uploadImage->name = $imageName;
                 $uploadImage->url = $uploadImage->upload($image, 'public', 'products/carousel');
 
-                $product->carouselImages()->associate($uploadImage)->save();
+                $product->carouselImages()->save($uploadImage);
             }
-        } else {
-            return 'err';
         }
 
         $machines = json_decode($request->machines);
