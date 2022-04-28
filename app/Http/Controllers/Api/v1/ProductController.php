@@ -36,13 +36,21 @@ class ProductController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'article' => ['required', 'string', 'max:255'],
-            'actualPrice' => ['required', 'numeric', 'between:0,99999999999.99'],
-            'discountPrice' => ['nullable', 'numeric', 'between:0,99999999999.99'],
+            'originalArticle' => ['nullable', 'string', 'max:255'],
+            'actualPrice' => ['nullable', 'numeric', 'between:0,99999999999.99'],
+            'discountPrice' => ['nullable', 'between:0,99999999999.99'],
             'weight' => ['required', 'numeric', 'between:0,999999.99'],
             'width' => ['numeric', 'between:0,999999.99', 'nullable'],
+            'diameter' => ['nullable', 'numeric', 'between:0,999999.99'],
+            'thickness' => ['nullable', 'numeric', 'between:0,999999.99'],
             'height' => ['numeric', 'between:0,999999.99', 'nullable'],
             'length' => ['numeric', 'between:0,999999.99', 'nullable'],
             'hole' => ['string', 'max:320', 'nullable'],
+            'mountingHole' => ['string', 'max:320', 'nullable'],
+            'captureWidth' => ['string', 'max:320', 'nullable'],
+            'thread' => ['string', 'max:320', 'nullable'],
+            'distanceBetweenHoles' => ['string', 'max:320', 'nullable'],
+            'description' => ['string', 'nullable'],
             'brandId' => ['numeric'],
             'machines' => ['required'],
             'previewImage' => ['image'],
@@ -58,13 +66,21 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->article = $request->article;
+        $product->originalArticle = $request->originalArticle;
         $product->actualPrice = $request->actualPrice;
         $product->discountPrice = $request->discountPrice;
         $product->weight = $request->weight;
         $product->width = $request->width;
+        $product->diameter = $request->diameter;
+        $product->thickness = $request->thickness;
         $product->height = $request->height;
         $product->length = $request->length;
         $product->hole = $request->hole;
+        $product->mountingHole = $request->mountingHole;
+        $product->captureWidth = $request->captureWidth;
+        $product->thread = $request->thread;
+        $product->distanceBetweenHoles = $request->distanceBetweenHoles;
+        $product->description = $request->description;
         $product->previewImage = $path;
         $product->brandId = $request->brandId;
 

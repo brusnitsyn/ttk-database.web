@@ -63,6 +63,15 @@ class DatabaseSeeder extends Seeder
             'machine_type_id' => 6,
         ]); //3
 
+        DB::table('product_categories')->insert([
+            'name' => "Распродажа",
+            'color' => "#FFDB19"
+        ]); //1
+        DB::table('product_categories')->insert([
+            'name' => "Новинка",
+            'color' => "#D11919"
+        ]); //2
+
         // DB::table('products')->insert([
         //     'name' => "Форсунки",
         //     'article' => "231686",
