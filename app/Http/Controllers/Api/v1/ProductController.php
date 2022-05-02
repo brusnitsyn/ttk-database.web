@@ -95,7 +95,7 @@ class ProductController extends Controller
                 $uploadImage->name = $imageName;
                 $uploadImage->url = $uploadImage->upload($image, 'public', 'products/carousel');
 
-                $product->carouselImages()->save($uploadImage);
+                $product->carousel_images()->save($uploadImage);
             }
         }
 
