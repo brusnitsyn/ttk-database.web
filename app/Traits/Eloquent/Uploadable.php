@@ -3,6 +3,7 @@
 namespace App\Traits\Eloquent;
 
 use Illuminate\Support\Facades\Storage;
+//use Image;
 
 trait Uploadable
 {
