@@ -59,6 +59,7 @@ class ProductController extends Controller
         ]);
 
         $product = new Product;
+        $host = $request->getSchemeAndHttpHost();
 
         if ($request->hasFile('previewImage')) {
             $path = $product->upload($request->previewImage, 'public', 'products/preview');
@@ -81,7 +82,7 @@ class ProductController extends Controller
         $product->thread = $request->thread;
         $product->distanceBetweenHoles = $request->distanceBetweenHoles;
         $product->description = $request->description;
-        $product->previewImage = $path;
+        $product->previewImage = $host . '/storage/' . $path;
         $product->brandId = $request->brandId;
 
         $product->save();
@@ -93,7 +94,7 @@ class ProductController extends Controller
 
                 $uploadImage = new UploadImage();
                 $uploadImage->name = $imageName;
-                $uploadImage->url = $uploadImage->upload($image, 'public', 'products/carousel');
+                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/carousel');
 
                 $product->carousel_images()->save($uploadImage);
             }
