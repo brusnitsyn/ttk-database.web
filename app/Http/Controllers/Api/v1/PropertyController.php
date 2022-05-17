@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PropertyResource;
+use App\Models\Properties;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -14,7 +16,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        return PropertyResource::collection(Properties::all());
     }
 
     /**

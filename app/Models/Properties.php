@@ -12,4 +12,9 @@ class Properties extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function productProperties()
+    {
+        return $this->morphMany(ProductProperties::class, 'propertiesable');
+    }
 }

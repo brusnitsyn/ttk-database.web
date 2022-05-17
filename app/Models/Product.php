@@ -14,11 +14,6 @@ class Product extends BaseModel
         'article',
         'actual_price',
         'discount_price',
-        'weight',
-        'width',
-        'height',
-        'length',
-        'hole',
         'preview_image',
         'brand_id',
     ];
@@ -46,5 +41,10 @@ class Product extends BaseModel
     public function carousel_images()
     {
         return $this->morphMany(UploadImage::class, 'imageable');
+    }
+
+    public function properties()
+    {
+        return $this->morphMany(ProductProperties::class, 'productable');
     }
 }

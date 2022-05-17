@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\BrandController;
 use App\Http\Controllers\Api\v1\MachineController;
 use App\Http\Controllers\Api\v1\MachineTypeController;
 use App\Http\Controllers\Api\v1\ProductController;
+use App\Http\Controllers\Api\v1\PropertyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::prefix('admin')->group(function() {
 
 Route::apiResources([
     'products' => ProductController::class,
+    'properties' => PropertyController::class,
     'brands' => BrandController::class,
     'machines' => MachineController::class,
     'machines-types' => MachineTypeController::class,

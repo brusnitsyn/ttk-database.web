@@ -8,6 +8,8 @@ use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
 use App\Models\MachineType;
 use App\Models\Product;
+use App\Models\ProductProperties;
+use App\Models\Properties;
 use App\Models\UploadImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -35,21 +37,22 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'properties' => ['required'],
             'article' => ['required', 'string', 'max:255'],
             'originalArticle' => ['nullable', 'string', 'max:255'],
             'actualPrice' => ['nullable', 'between:0,99999999999.99'],
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
-            'weight' => ['required', 'numeric', 'between:0,999999.99'],
-            'width' => ['nullable', 'between:0,999999.99'],
-            'diameter' => ['nullable', 'between:0,999999.99'],
-            'thickness' => ['nullable', 'between:0,999999.99'],
-            'height' => ['nullable', 'between:0,999999.99'],
-            'length' => ['nullable', 'between:0,999999.99'],
-            'hole' => ['string', 'max:320', 'nullable'],
-            'mountingHole' => ['string', 'max:320', 'nullable'],
-            'captureWidth' => ['string', 'max:320', 'nullable'],
-            'thread' => ['string', 'max:320', 'nullable'],
-            'distanceBetweenHoles' => ['string', 'max:320', 'nullable'],
+            // 'weight' => ['required', 'numeric', 'between:0,999999.99'],
+            // 'width' => ['nullable', 'between:0,999999.99'],
+            // 'diameter' => ['nullable', 'between:0,999999.99'],
+            // 'thickness' => ['nullable', 'between:0,999999.99'],
+            // 'height' => ['nullable', 'between:0,999999.99'],
+            // 'length' => ['nullable', 'between:0,999999.99'],
+            // 'hole' => ['string', 'max:320', 'nullable'],
+            // 'mountingHole' => ['string', 'max:320', 'nullable'],
+            // 'captureWidth' => ['string', 'max:320', 'nullable'],
+            // 'thread' => ['string', 'max:320', 'nullable'],
+            // 'distanceBetweenHoles' => ['string', 'max:320', 'nullable'],
             'description' => ['string', 'nullable'],
             'brandId' => ['numeric'],
             'machines' => ['required'],
@@ -70,17 +73,17 @@ class ProductController extends Controller
         $product->originalArticle = $request->originalArticle;
         $product->actualPrice = $request->actualPrice;
         $product->discountPrice = $request->discountPrice;
-        $product->weight = $request->weight;
-        $product->width = $request->width;
-        $product->diameter = $request->diameter;
-        $product->thickness = $request->thickness;
-        $product->height = $request->height;
-        $product->length = $request->length;
-        $product->hole = $request->hole;
-        $product->mountingHole = $request->mountingHole;
-        $product->captureWidth = $request->captureWidth;
-        $product->thread = $request->thread;
-        $product->distanceBetweenHoles = $request->distanceBetweenHoles;
+        // $product->weight = $request->weight;
+        // $product->width = $request->width;
+        // $product->diameter = $request->diameter;
+        // $product->thickness = $request->thickness;
+        // $product->height = $request->height;
+        // $product->length = $request->length;
+        // $product->hole = $request->hole;
+        // $product->mountingHole = $request->mountingHole;
+        // $product->captureWidth = $request->captureWidth;
+        // $product->thread = $request->thread;
+        // $product->distanceBetweenHoles = $request->distanceBetweenHoles;
         $product->description = $request->description;
         $product->previewImage = $host . '/storage/' . $path;
         $product->brandId = $request->brandId;
@@ -88,7 +91,7 @@ class ProductController extends Controller
         $product->save();
 
         $carouselImages = $request->carouselImages;
-        if (count($carouselImages) > 0) {
+        if ($carouselImages) {
             foreach ($carouselImages as $image) {
                 $imageName = uniqid() . '_' . str_replace(' ', '_', $image->getClientOriginalName());
 
@@ -108,6 +111,21 @@ class ProductController extends Controller
                 $machineForProduct->machineId = $machine->id;
                 $machineForProduct->save();
             }
+        }
+
+        $properties = json_decode($request->properties);
+        foreach ($properties as $property) {
+            $productProp = new ProductProperties;
+
+            if ($property->isDimension) {
+                $productProp->isDimension = $property->isDimension;
+                $productProp->dimension = $property->dimension;
+            }
+
+            $productProp->value = $property->value;
+            $productProp->propertiesId = $property->propertyId;
+
+            $product->properties()->save($productProp);
         }
 
         return ProductResource::make($product);

@@ -72,6 +72,16 @@ class DatabaseSeeder extends Seeder
             'color' => "#D11919"
         ]); //2
 
+        DB::table('properties')->insert([
+            'name' => "Ширина",
+        ]); //1
+        DB::table('properties')->insert([
+            'name' => "Высота",
+        ]); //2
+        DB::table('properties')->insert([
+            'name' => "Длина",
+        ]); //3
+
         // DB::table('products')->insert([
         //     'name' => "Форсунки",
         //     'article' => "231686",

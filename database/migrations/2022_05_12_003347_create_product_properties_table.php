@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('product_properties', function (Blueprint $table) {
             $table->id();
-            $table->morphs('product');
-            $table->morphs('property');
+            $table->morphs('productable');
+            $table->foreignId('properties_id')->references('id')->on('properties')->onDelete('cascade');
             $table->string('value');
-            $table->boolean('is_dimension')->default('false');
+            $table->boolean('is_dimension')->default(false);
             $table->string('dimension')->nullable();
             $table->timestamps();
         });

@@ -5,16 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductProperties extends Model
+class ProductProperties extends BaseModel
 {
     use HasFactory;
 
     protected $fillable = [
-        'productable_id',
-        'productable_type',
-        'propertyable_id',
-        'propertyable_type',
+        'productableId',
+        'productableType',
+        'propertiesId',
         'value',
         'dimension',
+        'isDimension',
     ];
+
+    public function productable()
+    {
+        return $this->morphTo();
+    }
+
 }
