@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate();
         return ProductResource::collection($products);
     }
 
@@ -42,64 +42,35 @@ class ProductController extends Controller
             'originalArticle' => ['nullable', 'string', 'max:255'],
             'actualPrice' => ['nullable', 'between:0,99999999999.99'],
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
-            // 'weight' => ['required', 'numeric', 'between:0,999999.99'],
-            // 'width' => ['nullable', 'between:0,999999.99'],
-            // 'diameter' => ['nullable', 'between:0,999999.99'],
-            // 'thickness' => ['nullable', 'between:0,999999.99'],
-            // 'height' => ['nullable', 'between:0,999999.99'],
-            // 'length' => ['nullable', 'between:0,999999.99'],
-            // 'hole' => ['string', 'max:320', 'nullable'],
-            // 'mountingHole' => ['string', 'max:320', 'nullable'],
-            // 'captureWidth' => ['string', 'max:320', 'nullable'],
-            // 'thread' => ['string', 'max:320', 'nullable'],
-            // 'distanceBetweenHoles' => ['string', 'max:320', 'nullable'],
             'description' => ['string', 'nullable'],
             'brandId' => ['numeric'],
             'machines' => ['required'],
-            'previewImage' => ['image'],
-            'carouselImages' => ['required'],
-            'carouselImages.*' => ['required']
+            'images' => ['array'],
         ]);
 
         $product = new Product;
         $host = $request->getSchemeAndHttpHost();
-
-        if ($request->hasFile('previewImage')) {
-            $path = $product->upload($request->previewImage, 'public', 'products/preview');
-        }
 
         $product->name = $request->name;
         $product->article = $request->article;
         $product->originalArticle = $request->originalArticle;
         $product->actualPrice = $request->actualPrice;
         $product->discountPrice = $request->discountPrice;
-        // $product->weight = $request->weight;
-        // $product->width = $request->width;
-        // $product->diameter = $request->diameter;
-        // $product->thickness = $request->thickness;
-        // $product->height = $request->height;
-        // $product->length = $request->length;
-        // $product->hole = $request->hole;
-        // $product->mountingHole = $request->mountingHole;
-        // $product->captureWidth = $request->captureWidth;
-        // $product->thread = $request->thread;
-        // $product->distanceBetweenHoles = $request->distanceBetweenHoles;
         $product->description = $request->description;
-        $product->previewImage = $host . '/storage/' . $path;
         $product->brandId = $request->brandId;
 
         $product->save();
 
-        $carouselImages = $request->carouselImages;
-        if ($carouselImages) {
-            foreach ($carouselImages as $image) {
+        $images = $request->images;
+        if ($images) {
+            foreach ($images as $image) {
                 $imageName = uniqid() . '_' . str_replace(' ', '_', $image->getClientOriginalName());
 
                 $uploadImage = new UploadImage();
                 $uploadImage->name = $imageName;
                 $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/carousel');
 
-                $product->carousel_images()->save($uploadImage);
+                $product->images()->save($uploadImage);
             }
         }
 
@@ -123,7 +94,7 @@ class ProductController extends Controller
             }
 
             $productProp->value = $property->value;
-            $productProp->propertiesId = $property->propertyId;
+            $productProp->propertiesId = $property->property->id;
 
             $product->properties()->save($productProp);
         }

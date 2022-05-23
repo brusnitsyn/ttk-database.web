@@ -14,7 +14,6 @@ class Product extends BaseModel
         'article',
         'actual_price',
         'discount_price',
-        'preview_image',
         'brand_id',
     ];
 
@@ -38,7 +37,7 @@ class Product extends BaseModel
         return $this->belongsToMany(Machine::class, 'machine_for_products', 'product_id', 'machine_id');
     }
 
-    public function carousel_images()
+    public function images()
     {
         return $this->morphMany(UploadImage::class, 'imageable');
     }

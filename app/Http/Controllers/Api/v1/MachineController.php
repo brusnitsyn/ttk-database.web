@@ -14,9 +14,16 @@ class MachineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return MachineResource::collection(Machine::all());
+        if(!$request->query())
+            return MachineResource::collection(Machine::all());
+
+        $machineTypeId = $request->query('machineType');
+        if($machineTypeId) {
+            $machines = Machine::where('machine_type_id', $machineTypeId)->get();
+            return MachineResource::collection($machines);
+        }
     }
 
     /**
@@ -48,7 +55,7 @@ class MachineController extends Controller
      */
     public function show(Machine $machine)
     {
-        //
+        return MachineResource::make($machine);
     }
 
     /**

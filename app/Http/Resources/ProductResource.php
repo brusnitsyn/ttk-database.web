@@ -34,8 +34,7 @@ class ProductResource extends JsonResource
             // 'thread' => $this->thread,
             // 'distanceBetweenHoles' => $this->distance_between_holes,
             'description' => $this->description,
-            'previewImage' => $this->previewImage,
-            'carouselImages' => UploadImageResource::collection($this->carouselImages),
+            'images' => UploadImageResource::collection($this->images),
 
             'brand' => $this->brand->name,
             'machines' => MachineResource::collection($this->machines),
