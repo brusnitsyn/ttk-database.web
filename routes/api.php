@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\v1\AuthController;
+use App\Http\Controllers\Api\v1\BannerController;
 use App\Http\Controllers\Api\v1\BrandController;
 use App\Http\Controllers\Api\v1\MachineController;
 use App\Http\Controllers\Api\v1\MachineTypeController;
@@ -22,6 +23,7 @@ Route::prefix('admin')->group(function() {
 Route::apiResources([
     'products' => ProductController::class,
     'properties' => PropertyController::class,
+    'banners' => BannerController::class,
     'brands' => BrandController::class,
     'machines' => MachineController::class,
     'machines-types' => MachineTypeController::class,
