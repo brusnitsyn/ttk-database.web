@@ -16,7 +16,8 @@ class MachineTypeController extends Controller
      */
     public function index()
     {
-        return MachineTypeResource::collection(MachineType::all());
+        $types = MachineType::paginate();
+        return MachineTypeResource::collection($types->loadMissing('brand'));
     }
 
     /**

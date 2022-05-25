@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Http\Filters\QueryFilter;
 use App\Traits\Eloquent\Uploadable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Http\Request;
 
 class Product extends BaseModel
 {
@@ -51,5 +54,10 @@ class Product extends BaseModel
     public function properties()
     {
         return $this->morphMany(ProductProperties::class, 'productable');
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filter)
+    {
+        $filter->apply($builder);
     }
 }

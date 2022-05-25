@@ -3,19 +3,15 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MachineResource;
-use App\Http\Resources\ProductForCategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
-use App\Models\MachineType;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductForCategory;
 use App\Models\ProductProperties;
-use App\Models\Properties;
 use App\Models\UploadImage;
+use App\Http\Filters\ProductFilter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -24,9 +20,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ProductFilter $filter)
     {
-        $products = Product::paginate();
+        $products = Product::filter($filter)->paginate();
         return ProductResource::collection($products);
     }
 

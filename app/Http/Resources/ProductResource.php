@@ -38,7 +38,7 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'images' => UploadImageResource::collection($this->images),
 
-            'brand' => $this->brand->name,
+            'brand' => BrandResource::make($this->brand),
             'machines' => MachineResource::collection($this->machines),
         ];
     }
