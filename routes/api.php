@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\v1\BannerController;
 use App\Http\Controllers\Api\v1\BrandController;
 use App\Http\Controllers\Api\v1\MachineController;
 use App\Http\Controllers\Api\v1\MachineTypeController;
+use App\Http\Controllers\Api\v1\ProductCategoryController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\PropertyController;
 use Illuminate\Http\Request;
@@ -27,4 +28,5 @@ Route::apiResources([
     'brands' => BrandController::class,
     'machines' => MachineController::class,
     'machines-types' => MachineTypeController::class,
+    'categories' => ProductCategoryController::class,
 ]);

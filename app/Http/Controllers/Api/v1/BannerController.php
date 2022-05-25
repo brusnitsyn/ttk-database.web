@@ -30,13 +30,12 @@ class BannerController extends Controller
     {
         $request->validate([
             'header' => ['string', 'max:380'],
-            'image' => ['string', 'max:380'],
+            'image' => ['image'],
             'url' => ['string', 'max:380'],
         ]);
 
         $banner = new Banner;
         $banner->header = $request->header;
-        $banner->subheader = $request->subheader;
         $banner->url = $request->url;
         $banner->save();
 
@@ -85,6 +84,9 @@ class BannerController extends Controller
      */
     public function destroy(Banner $banner)
     {
-        //
+        $image = $banner->image();
+        if ($image)
+            $image->delete();
+        $banner->delete();
     }
 }

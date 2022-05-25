@@ -11,12 +11,11 @@ class Banner extends Model
 
     protected $fillable = [
         'header',
-        'subheader',
         'url'
     ];
 
-    public function images()
+    public function image()
     {
-        return $this->morphMany(UploadImage::class, 'imageable');
+        return $this->morphOne(UploadImage::class, 'imageable');
     }
 }

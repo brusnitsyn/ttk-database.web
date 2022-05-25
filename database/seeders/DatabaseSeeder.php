@@ -69,7 +69,7 @@ class DatabaseSeeder extends Seeder
         ]); //1
         DB::table('product_categories')->insert([
             'name' => "Новинка",
-            'color' => "#D11919"
+            'color' => "#43EB49"
         ]); //2
 
         DB::table('properties')->insert([

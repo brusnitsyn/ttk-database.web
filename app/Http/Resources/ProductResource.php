@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ProductForCategory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -22,6 +23,7 @@ class ProductResource extends JsonResource
             'actualPrice' => $this->actualPrice,
             'discountPrice' => $this->discountPrice,
             'properties' => ProductPropertiesResource::collection($this->properties),
+            'category' => ProductCategoryResource::make($this->category->productCategory),
             // 'weight' => $this->weight,
             // 'width' => $this->width,
             // 'diameter' => $this->diameter,

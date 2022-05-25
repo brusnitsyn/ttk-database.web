@@ -37,6 +37,12 @@ class Product extends BaseModel
         return $this->belongsToMany(Machine::class, 'machine_for_products', 'product_id', 'machine_id');
     }
 
+    public function category()
+    {
+        //return $this->belongsToMany(ProductForCategory::class, 'product_for_categories', 'productable_id', 'machine_id');
+        return $this->morphOne(ProductForCategory::class, 'productable');
+    }
+
     public function images()
     {
         return $this->morphMany(UploadImage::class, 'imageable');

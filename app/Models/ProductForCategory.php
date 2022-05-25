@@ -10,8 +10,16 @@ class ProductForCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'productable_id',
-        'productable_type',
         'product_category_id',
     ];
+
+    public function productable()
+    {
+        return $this->morphTo();
+    }
+
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
 }

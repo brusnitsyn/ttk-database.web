@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('product_for_categories', function (Blueprint $table) {
             $table->id();
-            $table->morphs('product');
+            $table->morphs('productable');
             $table->foreignId('product_category_id')->references('id')->on('product_categories')->onDelete('cascade');
             $table->timestamps();
         });

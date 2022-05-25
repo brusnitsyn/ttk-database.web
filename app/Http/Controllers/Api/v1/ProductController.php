@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MachineResource;
+use App\Http\Resources\ProductForCategoryResource;
 use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
 use App\Models\MachineType;
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductForCategory;
 use App\Models\ProductProperties;
 use App\Models\Properties;
 use App\Models\UploadImage;
@@ -44,6 +47,7 @@ class ProductController extends Controller
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
             'description' => ['string', 'nullable'],
             'brandId' => ['numeric'],
+            'categoryId' => ['numeric'],
             'machines' => ['required'],
             'images' => ['array'],
         ]);
@@ -98,6 +102,12 @@ class ProductController extends Controller
 
             $product->properties()->save($productProp);
         }
+
+        // Category
+        $category = ProductCategory::find($request->categoryId);
+        $productForCategory = new ProductForCategory;
+        $productForCategory->product_category_id = $category->id;
+        $product->category()->save($productForCategory);
 
         return ProductResource::make($product);
     }
