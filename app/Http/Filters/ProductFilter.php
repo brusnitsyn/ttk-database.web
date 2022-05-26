@@ -21,6 +21,16 @@ class ProductFilter extends QueryFilter
     }
 
     /**
+     * @param string $categoryId
+     */
+    public function category(string $categoryId)
+    {
+        $this->builder->with('category')->whereHas('category', function ($query) use ($categoryId) {
+            $query->where('id', $categoryId);
+        })->take(10);
+    }
+
+    /**
      * @param string $brandId
      */
     public function brand(string $brandId)
