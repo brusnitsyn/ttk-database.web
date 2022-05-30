@@ -23,7 +23,7 @@ class ProductResource extends JsonResource
             'actualPrice' => $this->actualPrice,
             'discountPrice' => $this->discountPrice,
             'properties' => ProductPropertiesResource::collection($this->properties),
-            'category' => ProductCategoryResource::make($this->category->productCategory),
+            'category' => isset($this->category->productCategory) ? ProductCategoryResource::make($this->category->productCategory) : null,
             // 'weight' => $this->weight,
             // 'width' => $this->width,
             // 'diameter' => $this->diameter,
