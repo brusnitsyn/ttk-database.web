@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\v1\MachineTypeController;
 use App\Http\Controllers\Api\v1\ProductCategoryController;
 use App\Http\Controllers\Api\v1\ProductController;
 use App\Http\Controllers\Api\v1\PropertyController;
+use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::prefix('admin')->group(function() {
 });
 
 Route::apiResources([
+    'users' => UserController::class,
     'products' => ProductController::class,
     'properties' => PropertyController::class,
     'banners' => BannerController::class,

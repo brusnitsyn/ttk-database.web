@@ -4,7 +4,7 @@ namespace App\Http\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
 
-class ProductFilter extends QueryFilter
+class MachineTypeFilter extends QueryFilter
 {
     /**
      * @param string $name
@@ -21,34 +21,12 @@ class ProductFilter extends QueryFilter
     }
 
     /**
-     * @param string $categoryId
-     */
-    public function category(string $categoryId)
-    {
-        $this->builder->with('category')->whereHas('category', function ($query) use ($categoryId) {
-            $query->where('id', $categoryId);
-        })->take(10);
-    }
-
-    /**
      * @param string $brandId
      */
     public function brand(string $brandId)
     {
         $this->builder->with('brand')->whereHas('brand', function ($query) use ($brandId) {
             $query->where('id', $brandId);
-        });
-    }
-
-    /**
-     * @param string $typeId
-     */
-    public function type(string $typeId)
-    {
-        $this->builder->with('type')->whereHas('type', function ($query) use ($typeId) {
-            //$query->where('type', function($q) use ($typeId) {
-            $query->where('id', $typeId);
-            //});
-        });
+        })->take(10);
     }
 }

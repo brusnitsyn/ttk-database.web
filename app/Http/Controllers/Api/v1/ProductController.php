@@ -38,11 +38,11 @@ class ProductController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'properties' => ['required'],
             'article' => ['required', 'string', 'max:255'],
-            'originalArticle' => ['nullable', 'string', 'max:255'],
             'actualPrice' => ['nullable', 'between:0,99999999999.99'],
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
             'description' => ['string', 'nullable'],
             'brandId' => ['numeric'],
+            'typeId' => ['numeric'],
             'categoryId' => ['numeric'],
             'machines' => ['required'],
             'images' => ['array'],
@@ -58,6 +58,7 @@ class ProductController extends Controller
         $product->discountPrice = $request->discountPrice;
         $product->description = $request->description;
         $product->brandId = $request->brandId;
+        $product->typeId = $request->typeId;
 
         $product->save();
 

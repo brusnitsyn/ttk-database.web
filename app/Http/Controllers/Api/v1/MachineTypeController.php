@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\MachineTypeFilter;
 use App\Http\Resources\MachineTypeResource;
 use App\Models\MachineType;
 use Illuminate\Http\Request;
@@ -14,9 +15,9 @@ class MachineTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MachineTypeFilter $filter)
     {
-        $types = MachineType::paginate();
+        $types = MachineType::filter($filter)->paginate();
         return MachineTypeResource::collection($types->loadMissing('brand'));
     }
 
@@ -38,7 +39,19 @@ class MachineTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'brandId' => ['required', 'numeric'],
+        ]);
+
+        $machineType = new MachineType;
+
+        $machineType->name = $request->name;
+        $machineType->brand_id = $request->brandId;
+
+        $machineType->save();
+
+        return new MachineTypeResource($machineType);
     }
 
     /**

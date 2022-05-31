@@ -82,40 +82,10 @@ class DatabaseSeeder extends Seeder
             'name' => "Длина",
         ]); //3
 
-        // DB::table('products')->insert([
-        //     'name' => "Форсунки",
-        //     'article' => "231686",
-        //     'brand_id' => 2,
-        //     'actual_price' => 4300,
-        //     'weight' => 3.20,
-        //     'width' => 340,
-        //     'height' => 54,
-        //     'length' => 132,
-        //     'preview_image' => "/img/product-test-img.png",
-        // ]);
-        // DB::table('products')->insert([
-        //     'name' => "Башмак",
-        //     'article' => "РЗЗ ПЛН.02.33",
-        //     'actual_price' => 2300,
-        //     'brand_id' => 1,
-        //     'weight' => 5.20,
-        //     'width' => 234,
-        //     'height' => 65,
-        //     'length' => 124,
-        //     'hole' => "1 отверстие - 32 мм",
-        //     'preview_image' => "/img/product-test-img.png",
-        // ]);
-        // DB::table('machine_for_products')->insert([
-        //     'product_id' => 1,
-        //     'machine_id' => 3
-        // ]);
-        // DB::table('machine_for_products')->insert([
-        //     'product_id' => 2,
-        //     'machine_id' => 1
-        // ]);
-        // DB::table('machine_for_products')->insert([
-        //     'product_id' => 2,
-        //     'machine_id' => 2
-        // ]);
+        DB::table('users')->insert([
+            'name' => "Andrey Brusnitsyn",
+            'email' => "andrew.brusnitsyn@gmail.com",
+            'password' => '$2y$10$SWcl4d3jMGGkUQr7S5Sb4e5FU6O0r9ntSFgU/rqI1DLtVYpcjKnJu',
+        ]);
     }
 }

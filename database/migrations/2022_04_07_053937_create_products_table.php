@@ -22,8 +22,7 @@ return new class extends Migration
             $table->decimal('discount_price', 13)->nullable();
             $table->text('description')->nullable();
             $table->foreignId('brand_id')->references('id')->on('brands')->onDelete('cascade');
-
-            //$table->foreignId('');
+            $table->foreignId('type_id')->references('id')->on('machine_types')->onDelete('cascade');
             $table->timestamps();
         });
     }

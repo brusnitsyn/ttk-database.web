@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Models\Machine;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MachineResource;
+use App\Http\Resources\MachineTypeResource;
 use Illuminate\Http\Request;
 
 class MachineController extends Controller
@@ -16,11 +17,11 @@ class MachineController extends Controller
      */
     public function index(Request $request)
     {
-        if(!$request->query())
+        if (!$request->query())
             return MachineResource::collection(Machine::all());
 
         $machineTypeId = $request->query('machineType');
-        if($machineTypeId) {
+        if ($machineTypeId) {
             $machines = Machine::where('machine_type_id', $machineTypeId)->get();
             return MachineResource::collection($machines);
         }
@@ -44,7 +45,20 @@ class MachineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'typeId' => ['required', 'numeric'],
+        ]);
+
+        $machine = new Machine;
+
+        $machine->name = $request->name;
+
+        $machine->machine_type_id = $request->typeId;
+
+        $machine->save();
+
+        return new MachineResource($machine);
     }
 
     /**
