@@ -19,7 +19,6 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'article' => $this->article,
-            // 'originalArticle' => isset($this->originalArticle) ? $this->originalArticle : null,
             'actualPrice' => $this->actualPrice,
             'discountPrice' => $this->discountPrice,
             'properties' => ProductPropertiesResource::collection($this->properties),

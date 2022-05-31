@@ -45,10 +45,6 @@ class ProductFilter extends QueryFilter
      */
     public function type(string $typeId)
     {
-        $this->builder->with('type')->whereHas('type', function ($query) use ($typeId) {
-            //$query->where('type', function($q) use ($typeId) {
-            $query->where('id', $typeId);
-            //});
-        });
+        $this->builder->where('type_id', $typeId);
     }
 }

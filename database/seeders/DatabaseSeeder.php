@@ -51,26 +51,34 @@ class DatabaseSeeder extends Seeder
 
         DB::table('machines')->insert([
             'name' => "ПЛН 3-35",
+            'brand_id' => 1,
             'machine_type_id' => 4,
         ]); //1
         DB::table('machines')->insert([
             'name' => "ПЛН 4-35",
+            'brand_id' => 1,
             'machine_type_id' => 4,
         ]); //2
 
         DB::table('machines')->insert([
             'name' => "Бюлер",
+            'brand_id' => 2,
             'machine_type_id' => 6,
         ]); //3
 
         DB::table('product_categories')->insert([
-            'name' => "Распродажа",
-            'color' => "#FFDB19"
+            'name' => "Без категории",
         ]); //1
+
         DB::table('product_categories')->insert([
             'name' => "Новинка",
             'color' => "#43EB49"
         ]); //2
+
+        DB::table('product_categories')->insert([
+            'name' => "Распродажа",
+            'color' => "#FFDB19"
+        ]); //3
 
         DB::table('properties')->insert([
             'name' => "Ширина",

@@ -47,6 +47,7 @@ class MachineController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'brandId' => ['required', 'numeric'],
             'typeId' => ['required', 'numeric'],
         ]);
 
@@ -54,6 +55,7 @@ class MachineController extends Controller
 
         $machine->name = $request->name;
 
+        $machine->brand_id = $request->brandId;
         $machine->machine_type_id = $request->typeId;
 
         $machine->save();

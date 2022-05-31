@@ -53,7 +53,6 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->article = $request->article;
-        $product->originalArticle = $request->originalArticle;
         $product->actualPrice = $request->actualPrice;
         $product->discountPrice = $request->discountPrice;
         $product->description = $request->description;
@@ -138,8 +137,8 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
     }
 }
