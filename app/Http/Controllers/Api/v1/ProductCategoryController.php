@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\CategoryFilter;
 use App\Http\Resources\ProductCategoryResource;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
+        //$categories = ProductCategory::filter($filter);
         return ProductCategoryResource::collection(ProductCategory::all());
     }
 

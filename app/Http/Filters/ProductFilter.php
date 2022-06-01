@@ -2,6 +2,9 @@
 
 namespace App\Http\Filters;
 
+use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductForCategory;
 use Illuminate\Database\Eloquent\Builder;
 
 class ProductFilter extends QueryFilter
@@ -25,9 +28,9 @@ class ProductFilter extends QueryFilter
      */
     public function category(string $categoryId)
     {
-        $this->builder->with('category')->whereHas('category', function ($query) use ($categoryId) {
-            $query->where('id', $categoryId);
-        })->take(10);
+        $this->builder->whereHas('category', function ($query) use ($categoryId) {
+            $query->where('product_for_categories.product_category_id', $categoryId);
+        });
     }
 
     /**
