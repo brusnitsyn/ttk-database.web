@@ -44,7 +44,7 @@ class ProductController extends Controller
             'brandId' => ['numeric'],
             'typeId' => ['numeric'],
             'categoryId' => ['numeric'],
-            'machines' => ['required'],
+            'machines' => ['string'],
             'images' => ['array'],
         ]);
 

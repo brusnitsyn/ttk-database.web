@@ -27,7 +27,15 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $property = new Properties();
+        $property->name = $request->name;
+        $property->save();
+
+        return PropertyResource::make($property);
     }
 
     /**
