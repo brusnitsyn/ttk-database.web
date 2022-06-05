@@ -7,15 +7,14 @@ use Intervention\Image\Facades\Image as ImageInt;
 
 trait Uploadable
 {
-    public function upload($file, $storage = 'public', $folder = 'uploads')
+    public function upload($file, $storage = 'public', $folder = 'uploads', $filename)
     {
-        $filename = uniqid() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
-        //$path = Storage::disk($storage)->putFileAs($folder, $file, $filename);
+        $image = ImageInt::make($file)->encode('webp', 90);
+        Storage::put($storage . '/' . $folder . '/' . $filename, $image->__toString());
+        $path = $folder . '/' . $filename;
 
-        $image = ImageInt::make($file)->encode('webp', 90)->save(public_path('uploads/'  .  $filename . '.webp'));
-
-        if (Storage::disk($storage)->exists($image)) {
-            return $image;
+        if (Storage::disk($storage)->exists($path)) {
+            return $path;
         }
 
         return null;

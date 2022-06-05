@@ -64,11 +64,11 @@ class ProductController extends Controller
         $images = $request->images;
         if ($images) {
             foreach ($images as $image) {
-                $imageName = uniqid() . '_' . str_replace(' ', '_', $image->getClientOriginalName());
+                $imageName = uniqid() . '.webp';
 
                 $uploadImage = new UploadImage();
                 $uploadImage->name = $imageName;
-                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/carousel');
+                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
 
                 $product->images()->save($uploadImage);
             }
