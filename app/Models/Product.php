@@ -31,6 +31,16 @@ class Product extends BaseModel
     }
 
     /**
+     * Get the brand that owns the Product
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function type()
+    {
+        return $this->belongsTo(MachineType::class);
+    }
+
+    /**
      * The machines that belong to the Product
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

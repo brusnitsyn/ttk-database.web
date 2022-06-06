@@ -41,9 +41,9 @@ class ProductController extends Controller
             'actualPrice' => ['nullable', 'between:0,99999999999.99'],
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
             'description' => ['string', 'nullable'],
-            'brandId' => ['numeric'],
-            'typeId' => ['numeric'],
-            'categoryId' => ['numeric'],
+            'brand' => ['string'],
+            'type' => ['string'],
+            'category' => ['string'],
             'machines' => ['string'],
             'images' => ['array'],
         ]);
@@ -51,13 +51,17 @@ class ProductController extends Controller
         $product = new Product;
         $host = $request->getSchemeAndHttpHost();
 
+        $brand = json_decode($request->brand);
+        $type = json_decode($request->type);
+        $category = json_decode($request->category);
+
         $product->name = $request->name;
         $product->article = $request->article;
         $product->actualPrice = $request->actualPrice;
         $product->discountPrice = $request->discountPrice;
         $product->description = $request->description;
-        $product->brandId = $request->brandId;
-        $product->typeId = $request->typeId;
+        $product->brandId = $brand->id;
+        $product->typeId = $type->id;
 
         $product->save();
 
@@ -100,7 +104,7 @@ class ProductController extends Controller
         }
 
         // Category
-        $category = ProductCategory::find($request->categoryId);
+        $category = ProductCategory::find($category->id);
         $productForCategory = new ProductForCategory;
         $productForCategory->product_category_id = $category->id;
         $product->category()->save($productForCategory);
@@ -126,9 +130,77 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $brand = json_decode($request->brand);
+        $type = json_decode($request->type);
+        $category = json_decode($request->category);
+
+        $host = $request->getSchemeAndHttpHost();
+
+        $product->name = $request->name;
+        $product->article = $request->article;
+        $product->actualPrice = $request->actualPrice;
+        $product->discountPrice = $request->discountPrice;
+        $product->description = $request->description;
+        $product->brandId = $brand->id;
+        $product->typeId = $type->id;
+
+        $product->save();
+
+        $images = $request->images;
+        if ($images) {
+            foreach ($images as $image) {
+                $imageName = uniqid() . '.webp';
+
+                $uploadImage = new UploadImage();
+                $uploadImage->name = $imageName;
+                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
+
+                $product->images()->save($uploadImage);
+            }
+        }
+
+        $machines = json_decode($request->machines);
+        if ($machines) {
+            foreach ($machines as $machine) {
+
+                $productMachine = MachineForProduct::where('product_id', $product->id)->firstOrFail();
+
+                if ($productMachine)
+                    $productMachine->delete();
+
+                $machineForProduct = new MachineForProduct();
+                $machineForProduct->productId = $product->id;
+                $machineForProduct->machineId = $machine->id;
+                $machineForProduct->save();
+            }
+        }
+
+        $properties = json_decode($request->properties);
+        foreach ($properties as $property) {
+            $productProp = ProductProperties::findOrCreate($property->id);
+
+            if ($property->isDimension) {
+                $productProp->isDimension = $property->isDimension;
+                $productProp->dimension = $property->dimension;
+            }
+
+            $productProp->value = $property->value;
+            $productProp->propertiesId = $property->property->id;
+
+            $product->properties()->save($productProp);
+        }
+
+        // Category
+        if ($category != null) {
+            $category = ProductCategory::find($category->id);
+            $productForCategory = new ProductForCategory;
+            $productForCategory->product_category_id = $category->id;
+            $product->category()->save($productForCategory);
+        }
+
+        return ProductResource::make($product);
     }
 
     /**

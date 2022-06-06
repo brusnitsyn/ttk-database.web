@@ -46,7 +46,7 @@ class BannerController extends Controller
 
         $uploadImage = new UploadImage;
         $uploadImage->name = $imageName;
-        $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'banners');
+        $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'banners', $imageName);
 
         $banner->image()->save($uploadImage);
 

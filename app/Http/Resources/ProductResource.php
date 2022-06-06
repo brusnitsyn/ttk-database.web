@@ -27,7 +27,7 @@ class ProductResource extends JsonResource
             'images' => UploadImageResource::collection($this->images),
 
             'brand' => BrandResource::make($this->brand),
-            'type' => $this->type,
+            'type' => MachineTypeResource::make($this->type),
             'machines' => MachineResource::collection($this->machines),
         ];
     }
