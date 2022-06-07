@@ -31,7 +31,7 @@ class Product extends BaseModel
     }
 
     /**
-     * Get the brand that owns the Product
+     * Get the type that owns the Product
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

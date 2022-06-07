@@ -150,12 +150,15 @@ class ProductController extends Controller
 
         $images = $request->images;
         if ($images) {
+            // if($product->images()) {
+
+            // }
             foreach ($images as $image) {
                 $imageName = uniqid() . '.webp';
 
                 $uploadImage = new UploadImage();
                 $uploadImage->name = $imageName;
-                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
+                $uploadImage->url = $host . '/api/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
 
                 $product->images()->save($uploadImage);
             }
@@ -178,19 +181,46 @@ class ProductController extends Controller
         }
 
         $properties = json_decode($request->properties);
-        foreach ($properties as $property) {
-            $productProp = ProductProperties::findOrCreate($property->id);
-
-            if ($property->isDimension) {
-                $productProp->isDimension = $property->isDimension;
-                $productProp->dimension = $property->dimension;
+        foreach ($product->properties() as $productProp) {
+            $id = $productProp->id;
+            foreach ($properties as $property) {
+                $prop = ProductProperties::where('id', $id)->first();
+                $prop = ProductProperties::updateOrCreate([
+                    'isDimension' => $property->isDimension,
+                    'dimension' => $property->dimension,
+                    'value' => $property->value,
+                    'propertiesId' => $property->propertiesId,
+                ]);
+                $product->properties()->save($prop);
             }
-
-            $productProp->value = $property->value;
-            $productProp->propertiesId = $property->property->id;
-
-            $product->properties()->save($productProp);
         }
+        // $productProps = $product->properties();
+        // if ($productProps) {
+        //     foreach ($productProps as $prop) {
+
+        //         else {
+        //             $productProp = new ProductProperties;
+        //             if ($property->isDimension) {
+        //                 $productProp->isDimension = $property->isDimension;
+        //                 $productProp->dimension = $property->dimension;
+        //             }
+
+        //             $productProp->value = $property->value;
+        //             $productProp->propertiesId = $property->property->id;
+        //             $product->properties()->save($productProp);
+        //         }
+        //     }
+        // } else {
+        //     $productProp = new ProductProperties;
+        //     if ($property->isDimension) {
+        //         $productProp->isDimension = $property->isDimension;
+        //         $productProp->dimension = $property->dimension;
+        //     }
+
+        //     $productProp->value = $property->value;
+        //     $productProp->propertiesId = $property->property->id;
+        //     $product->properties()->save($productProp);
+        // }
 
         // Category
         if ($category != null) {
