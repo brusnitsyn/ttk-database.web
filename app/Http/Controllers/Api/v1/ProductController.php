@@ -11,6 +11,7 @@ use App\Models\ProductForCategory;
 use App\Models\ProductProperties;
 use App\Models\UploadImage;
 use App\Http\Filters\ProductFilter;
+use App\Http\Requests\ProductStoreRequest;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -32,7 +33,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -65,19 +66,13 @@ class ProductController extends Controller
 
         $product->save();
 
-        $images = $request->images;
-        if ($images) {
-            foreach ($images as $image) {
-                $imageName = uniqid() . '.webp';
+        // Category
+        $category = ProductCategory::find($category->id);
+        $productForCategory = new ProductForCategory;
+        $productForCategory->product_category_id = $category->id;
+        $product->category()->save($productForCategory);
 
-                $uploadImage = new UploadImage();
-                $uploadImage->name = $imageName;
-                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
-
-                $product->images()->save($uploadImage);
-            }
-        }
-
+        // Machines
         $machines = json_decode($request->machines);
         if ($machines) {
             foreach ($machines as $machine) {
@@ -88,6 +83,7 @@ class ProductController extends Controller
             }
         }
 
+        // Properties
         $properties = json_decode($request->properties);
         foreach ($properties as $property) {
             $productProp = new ProductProperties;
@@ -103,11 +99,19 @@ class ProductController extends Controller
             $product->properties()->save($productProp);
         }
 
-        // Category
-        $category = ProductCategory::find($category->id);
-        $productForCategory = new ProductForCategory;
-        $productForCategory->product_category_id = $category->id;
-        $product->category()->save($productForCategory);
+        // Images
+        $images = $request->images;
+        if ($images) {
+            foreach ($images as $image) {
+                $imageName = uniqid() . '.webp';
+
+                $uploadImage = new UploadImage();
+                $uploadImage->name = $imageName;
+                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
+
+                $product->images()->save($uploadImage);
+            }
+        }
 
         return ProductResource::make($product);
     }
@@ -148,6 +152,16 @@ class ProductController extends Controller
 
         $product->save();
 
+        // Category
+        if ($category != null) {
+            $category = ProductCategory::find($category->id);
+            $productForCategory = new ProductForCategory;
+            $productForCategory->product_category_id = $category->id;
+            $product->category()->save($productForCategory);
+        }
+
+
+        // Images
         $images = $request->images;
         if ($images) {
             // if($product->images()) {
@@ -164,6 +178,7 @@ class ProductController extends Controller
             }
         }
 
+        // Machines
         $machines = json_decode($request->machines);
         if ($machines) {
             foreach ($machines as $machine) {
@@ -180,6 +195,7 @@ class ProductController extends Controller
             }
         }
 
+        // Properties
         $properties = json_decode($request->properties);
         foreach ($product->properties() as $productProp) {
             $id = $productProp->id;
@@ -221,14 +237,6 @@ class ProductController extends Controller
         //     $productProp->propertiesId = $property->property->id;
         //     $product->properties()->save($productProp);
         // }
-
-        // Category
-        if ($category != null) {
-            $category = ProductCategory::find($category->id);
-            $productForCategory = new ProductForCategory;
-            $productForCategory->product_category_id = $category->id;
-            $product->category()->save($productForCategory);
-        }
 
         return ProductResource::make($product);
     }
