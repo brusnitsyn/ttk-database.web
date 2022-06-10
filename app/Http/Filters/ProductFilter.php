@@ -14,13 +14,15 @@ class ProductFilter extends QueryFilter
      */
     public function search(string $name)
     {
-        $words = array_filter(explode(' ', $name));
+        if (isset($name)) {
+            $words = array_filter(explode(' ', $name));
 
-        $this->builder->where(function (Builder $query) use ($words) {
-            foreach ($words as $word) {
-                $query->where('name', 'like', "%$word%");
-            }
-        });
+            $this->builder->where(function (Builder $query) use ($words) {
+                foreach ($words as $word) {
+                    $query->where('name', 'like', "%$word%");
+                }
+            });
+        }
     }
 
     /**
