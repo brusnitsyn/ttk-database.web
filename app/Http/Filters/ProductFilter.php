@@ -36,20 +36,25 @@ class ProductFilter extends QueryFilter
     }
 
     /**
-     * @param string $brandId
+     * @param string $brandsIds
      */
-    public function brand(string $brandId)
+    public function brand(string $brandsIds)
     {
-        $this->builder->with('brand')->whereHas('brand', function ($query) use ($brandId) {
-            $query->where('id', $brandId);
-        });
+        return $this->builder->whereIn('brand_id', $this->paramToArray($brandsIds));
+        // $brands = explode(' ,', $brandsId);
+        // $this->builder->with('brand')->whereHas('brand', function ($query) use ($brands) {
+        //     foreach ($brands as $brand) {
+        //         $query->where('id', 'like', $brand);
+        //     }
+        // });
     }
 
     /**
-     * @param string $typeId
+     * @param string $typesIds
      */
-    public function type(string $typeId)
+    public function type(string $typesIds)
     {
-        $this->builder->where('type_id', $typeId);
+        return $this->builder->whereIn('type_id', $this->paramToArray($typesIds));
+        //$this->builder->where('type_id', $typeId);
     }
 }

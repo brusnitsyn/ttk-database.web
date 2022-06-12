@@ -19,6 +19,11 @@ abstract class QueryFilter
     protected $builder;
 
     /**
+     * @var String
+     */
+    protected $delimiter = ',';
+
+    /**
      * @param Request $request
      */
     public function __construct(Request $request)
@@ -33,21 +38,23 @@ abstract class QueryFilter
     {
         $this->builder = $builder;
 
-        foreach ($this->fields() as $field => $value) {
+        foreach ($this->filters() as $field => $value) {
             // $method = camel_case($field);
             if (method_exists($this, $field)) {
-                call_user_func_array([$this, $field], (array)$value);
+                call_user_func_array([$this, $field], array_filter([$value]));
             }
         }
+
+        return $this->builder;
     }
 
-    /**
-     * @return array
-     */
-    protected function fields(): array
+    public function filters()
     {
-        return array_filter(
-            array_map('trim', $this->request->all())
-        );
+        return $this->request->query();
+    }
+
+    protected function paramToArray($param)
+    {
+        return explode($this->delimiter, $param);
     }
 }
