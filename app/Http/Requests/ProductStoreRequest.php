@@ -13,7 +13,7 @@ class ProductStoreRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth('api')->check();
     }
 
     /**
@@ -24,7 +24,17 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'properties' => ['required'],
+            'article' => ['required', 'string', 'max:255'],
+            'actualPrice' => ['nullable', 'between:0,99999999999.99'],
+            'discountPrice' => ['nullable', 'between:0,99999999999.99'],
+            'description' => ['string', 'nullable'],
+            'brand' => ['string'],
+            'type' => ['string'],
+            'category' => ['string'],
+            'machines' => ['string'],
+            'images' => ['array'],
         ];
     }
 }
