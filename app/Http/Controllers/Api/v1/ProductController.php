@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Actions\Product\ProductStoreAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
@@ -33,72 +34,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ProductStoreRequest $request)
+    public function store(ProductStoreRequest $request, ProductStoreAction $action)
     {
-        $product = new Product;
-        $host = $request->getSchemeAndHttpHost();
-
-        $brand = json_decode($request->brand);
-        $type = json_decode($request->type);
-        $category = json_decode($request->category);
-
-        $product->name = $request->name;
-        $product->article = $request->article;
-        $product->actualPrice = $request->actualPrice;
-        $product->discountPrice = $request->discountPrice;
-        $product->description = $request->description;
-        $product->brandId = $brand->id;
-        $product->typeId = $type->id;
-
-        $product->save();
-
-        // Category
-        $category = ProductCategory::find($category->id);
-        $productForCategory = new ProductForCategory;
-        $productForCategory->product_category_id = $category->id;
-        $product->category()->save($productForCategory);
-
-        // Machines
-        $machines = json_decode($request->machines);
-        if ($machines) {
-            foreach ($machines as $machine) {
-                $machineForProduct = new MachineForProduct();
-                $machineForProduct->productId = $product->id;
-                $machineForProduct->machineId = $machine->id;
-                $machineForProduct->save();
-            }
-        }
-
-        // Properties
-        $properties = json_decode($request->properties);
-        foreach ($properties as $property) {
-            $productProp = new ProductProperties;
-
-            if ($property->isDimension) {
-                $productProp->isDimension = $property->isDimension;
-                $productProp->dimension = $property->dimension;
-            }
-
-            $productProp->value = $property->value;
-            $productProp->propertiesId = $property->property->id;
-
-            $product->properties()->save($productProp);
-        }
-
-        // Images
-        $images = $request->images;
-        if ($images) {
-            foreach ($images as $image) {
-                $imageName = uniqid() . '.webp';
-
-                $uploadImage = new UploadImage();
-                $uploadImage->name = $imageName;
-                $uploadImage->url = $host . '/storage/' . $uploadImage->upload($image, 'public', 'products/images', $imageName);
-
-                $product->images()->save($uploadImage);
-            }
-        }
-
+        $product = $action->handle($request);
         return ProductResource::make($product);
     }
 
