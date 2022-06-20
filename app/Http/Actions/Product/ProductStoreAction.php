@@ -4,15 +4,14 @@ namespace App\Actions\Product;
 
 use App\Models\MachineForProduct;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\ProductForCategory;
 use App\Models\ProductProperties;
 use App\Models\UploadImage;
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class ProductStoreAction
 {
-    public function handle(FormRequest $request)
+    public function handle(Request $request)
     {
         $product = new Product;
         $host = $request->getSchemeAndHttpHost();
@@ -71,5 +70,7 @@ class ProductStoreAction
                 $product->images()->save($uploadImage);
             }
         }
+
+        return $product;
     }
 }
