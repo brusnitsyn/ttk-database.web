@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Actions\Product;
+namespace App\Http\Actions\Product;
 
+use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
 use App\Models\Product;
 use App\Models\ProductForCategory;
@@ -100,19 +101,39 @@ class ProductUpdateAction
         $product->save();
 
         // Category
-        $productForCategory = new ProductForCategory;
-        $productForCategory->product_category_id = $request->categoryId;
-        $product->category()->save($productForCategory);
+        $productForCategory = $product->category();
+        $productForCategory->update([
+            'product_category_id' => $request->categoryId
+        ]);
 
         // Machines
-        if ($request->machinesIds) {
+        $productMachines = $product->machines();
+        foreach ($productMachines as $productMachine) {
             foreach ($request->machinesIds as $machineId) {
+                if ($productMachine['id'] == $machineId)
+                    return;
                 $machineForProduct = new MachineForProduct;
                 $machineForProduct->productId = $product->id;
                 $machineForProduct->machineId = $machineId;
                 $machineForProduct->save();
             }
         }
+        // if ($request->machinesIds) {
+        //     $productMachines = MachineForProduct::where('product_id', $request->id)->get();
+        //     foreach ($request->machinesIds as $machineId) {
+        //         if ($productMachines) {
+        //             foreach ($productMachines as $productMachine) {
+        //                 if ($productMachine->machineId == $machineId)
+        //                     return;
+
+        //                 $machineForProduct = new MachineForProduct;
+        //                 $machineForProduct->productId = $product->id;
+        //                 $machineForProduct->machineId = $machineId;
+        //                 $machineForProduct->save();
+        //             }
+        //         }
+        //     }
+        // }
 
         // Properties
         if ($request->properties) {

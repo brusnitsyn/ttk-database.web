@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Product;
+namespace App\Http\Actions\Product;
 
 use App\Models\MachineForProduct;
 use App\Models\Product;

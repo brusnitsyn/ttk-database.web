@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Actions\Product\ProductStoreAction;
-use App\Actions\Product\ProductUpdateAction;
+use App\Http\Actions\Product\ProductStoreAction;
+use App\Http\Actions\Product\ProductUpdateAction;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Models\MachineForProduct;
@@ -21,6 +21,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \app\Http\Filters\ProductFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(ProductFilter $filter)
@@ -33,7 +34,8 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \app\Http\Actions\Product\ProductStoreAction  $action
+     * @return \app\Http\Resources\ProductResource
      */
     public function store(ProductStoreRequest $request, ProductStoreAction $action)
     {
@@ -44,8 +46,8 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \app\Models\Product  $product
+     * @return \app\Http\Resources\ProductResource
      */
     public function show(Product $product)
     {
@@ -56,8 +58,9 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \app\Models\Product  $product
+     * @param \app\Http\Actions\Product\ProductUpdateAction  $action
+     * @return \app\Http\Resources\ProductResource
      */
     public function update(Request $request, Product $product, ProductUpdateAction $action)
     {
