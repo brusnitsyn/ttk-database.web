@@ -25,7 +25,7 @@ class ProductStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'properties' => ['required'],
+            'properties' => ['string'],
             'article' => ['required', 'string', 'max:255'],
             'actualPrice' => ['nullable', 'between:0,99999999999.99'],
             'discountPrice' => ['nullable', 'between:0,99999999999.99'],
